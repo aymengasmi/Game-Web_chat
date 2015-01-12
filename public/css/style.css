@@ -1,0 +1,40 @@
+/* ------------ Body styles ------------ */
+
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  
+  background-color: #f0f1f3;
+  color:#667073;
+}
+
+section
+{
+
+}
+
+h1
+{
+	text-align:center;
+
+}
+
+.center
+{
+	text-align:center;
+}
+
+.avatar
+{
+  display: block;
+  width: 20px;
+  height: 20px;
+ border-radius:50%;
+  background-color: #0159b3;
+}
+
+#start
+{
+	display:none;
+}

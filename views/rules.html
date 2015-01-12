@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8" />
+	<title>mOG : Are you ready ? </title>
+	
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- My stylesheet -->
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+	<section class="container">
+		<div class="row">
+			<div class=".col-xs-6 col-md-2"></div>
+			
+			<div class=".col-xs-6 col-md-8">
+				<div class=" panel panel-default">
+					  <div class="panel-body">
+
+						<h1>ThreatCircle</h1>
+
+						<h2>Rules</h2>
+
+						<h3>But</h3>
+						<p>Vous disposez au départ de 100points de vie, le but étant de survivre le plus longtemps.</p>
+						<h3>Se déplacer</h3>
+						<p>Utiliser les flêches directionnelles pour vous déplacer. Si vous sortez du terrain, vous mourrez immédiatement.</p>
+
+						<h3>Les effets</h3>
+						<p>Les touches L1&R1 permettent de changer de forme, se changement vous coutera 5points de vie.</p><p> La touche 4 permet de réduire la taille du joueur, se changement vous coutera 5points de vie.</p><p> La touche 3 permet de s'arreter, se changement vous coutera 5points de vie.</p>
+
+						<h3>Collisions entre deux joueurs</h3>
+						<p>La vitesse est décomposée en deux composantes : Vitesse en X et Vitesse en Y. Les régles de collisions ci-suivantes ne s'appliquent pas à la vitesse globale, mais pour chaque composante.</p>
+						<h4>Collision: vitesses de sens opposées</h4>
+						<p>Les vitesses sont échangées, c'est à dire que la vitesse du joueur 1 devient celle du joueur 2 et vis-versa.</p>
+						<p>Les deux joueurs se verront infliger une perte de 5points de vie.</p>
+						<h4>Collision: vitesses de sens colinéaires</h4>
+						<p>On peut définir un joueur cible: celui qui se fait entrer dedans dans le sens des vitesses considérées et le joueur predateur.</p>
+						<p>Le joueur cible se verra transmettre la vitesse du joueur predateur et se verra aussi infliger une perte de 5points de vie.</p>
+
+					  </div>
+				</div>
+			</div>
+			
+			<div class=".col-xs-6 col-md-2">
+				<a href="/room" class="btn btn-primary btn-lg btn-block">Back</a>
+			</div>
+			
+		</div>
+	
+	</section>
+</body>
+
+</html>

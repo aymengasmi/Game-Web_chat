@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+	<meta charset="utf-8" />
+	<title>mOG : Are you ready ? </title>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>	
+
+	<script src="/socket.io/socket.io.js"></script>
+
+	
+	<!-- My stylesheet -->	
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+<!-- Modal -->
+<div class="modal fade" id="createparty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	<form class="form-horizontal" action="/create">
+      <div class="modal-body">
+
+	<fieldset>
+
+	<!-- Form Name -->
+	<legend>Create party</legend>
+
+	<!-- Text input-->
+	<div class="control-group">
+	  <label class="control-label" for="name">Name</label>
+	  <div class="controls">
+	    <input id="name" name="name" placeholder="newgame" class="input-xlarge" type="text">
+	    
+	  </div>
+	</div>
+
+	<div class="control-group">
+	  <label class="control-label" for="maxplayers">Max players in game:</label>
+	  <div class="controls">
+	    <select id="maxplayers" name="maxplayers" class="input-xlarge">
+	      <option>2</option>
+	      <option>3</option>
+	      <option>4</option>
+	    </select>
+	  </div>
+	</div>
+
+
+	</fieldset>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-success" />
+      </div>
+	</form>
+    </div>
+  </div>
+</div>
+	<section class="container">
+		<div class="row">
+			<div class=".col-xs-6 col-md-2"></div>
+			
+			<div class=".col-xs-6 col-md-8">
+				<div class=" panel panel-default">
+					  <div class="panel-body">
+							<h1>ThreatCircle</h1>
+							
+							<h2>Choose a room</h2>
+							
+							<table id="troom" class="table table-striped">  
+								<thead>  
+								  <tr>  
+									<th>Name</th>  
+									<th>Players</th>  
+									<th></th>
+									<th></th>
+								  </tr>  
+								</thead>  
+								<tbody>  
+
+<%
+var prooms=JSON.parse(rooms);
+
+for(var i = 0 ; i < prooms.length ; i++) 
+{
+	var room=prooms[i];
+	var pplayers=room.players;
+%>
+								<tr id="g<%=room.id %>">
+									<td><%=room.title %></td>  
+									<td id="lPlayerCo<%=room.id %>">
+<%
+for(var j = 0 ; j < pplayers.length; j++) 
+{
+%><%=pplayers[j].title %>,
+
+<% 
+} 
+%>
+
+									</td>  
+
+									<td><span id="PlayerCo<%=room.id %>"><%=room.players.length %></span>/<%=room.maxPlayers %></td>   
+									<td>
+
+										<a href="/game/<%=room.id %>">Join</a>
+
+									</td>
+								</tr>
+<%
+} 
+%>
+								   
+								</tbody>  
+							  </table>  
+							
+	
+					  </div>
+				</div>
+			</div>
+			
+			<div class=".col-xs-6 col-md-2">
+				<nav>
+					<a href="/rules" class="btn btn-info btn-lg btn-block">Rules</a>
+					<a href="#" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#createparty">Create a party</a>
+				</nav>
+			</div>
+			
+		</div>
+	
+	</section>
+
+</body>
+
+<script>
+	var socket = io('/room');
+
+	socket.on('gamenew', function (data) {
+
+		$('#troom').append('<tr id="g'+data.id+'"><td>'+data.title+'</td><td id="lPlayerCo'+data.id+'"></td><td><span id="PlayerCo'+data.id+'">0</span>/'+data.maxPlayers+'</td><td><a href="/game/'+data.id+'">Join</a></td></tr>');
+	    	console.log("new : "+data);
+	});
+
+	socket.on('gameupdate', function (data) {
+
+		var balise=$('#PlayerCo'+data.id);
+		balise.text(data.nbPlayers);
+
+		var balise=$('#lPlayerCo'+data.id);
+		balise.html(data.player+", "+balise.text());
+
+	    	console.log("update game n°"+data.id);
+	});
+
+	socket.on('end', function (data) {
+		$('#g'+data.id).remove;
+		
+	});
+
+</script>
+
+</html>
